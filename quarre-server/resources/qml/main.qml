@@ -1,7 +1,10 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
-import WPN114 1.0 as WPN114
+
+import WPN114.Audio 1.0
+import WPN114.Audio.Spatial 1.0 as Spatial
+import WPN114.Audio.Utilities 1.0
 
 import "scenes"
 import "views"
@@ -29,12 +32,11 @@ Rectangle
     Scenario         { id: main_scenario }
     MainView         { id: mainview }
 
-    //    PushApplicationControl  { id: push }
-
-    WPN114.RoomSetup //================================================================= ROOM_SETUP
+    Spatial.RoomSetup //================================================================= ROOM_SETUP
     {
         id: roomsetup;
-        WPN114.SpeakerRing
+
+        Spatial.SpeakerRing
         {
             nspeakers: 8;
             horizontalInfluence: 0.707
@@ -44,23 +46,10 @@ Rectangle
         }
     }
 
-    WPN114.PinkAudio
-    {
-        nchannels: 8
-        duration: 0.5
-        stream: audiostream;
-        path: "/utilities/tester"
-    }
-
-    WPN114.AudioStream //=============================================================== AUDIO
+    AudioStream //=============================================================== AUDIO
     {
         id:             audiostream
-
-//        outDevice:      "Scarlett 18i20 USB"
         outDevice:      "Soundflower (64ch)"
-
-//        outDevice:      "MOTU UltraLite mk3"
-        exposePath:     "/master"
         numOutputs:     8
         sampleRate:     44100
         blockSize:      512
@@ -68,7 +57,7 @@ Rectangle
 
         inserts:
         [
-            WPN114.PeakRMS
+            PeakRMS
             {
                 id:      vu_master
                 source:  audiostream

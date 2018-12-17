@@ -2,7 +2,6 @@ import QtQuick 2.0
 import QtQuick.Controls 2.4
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.11
-import WPN114 1.0 as WPN114
 
 Item
 {
@@ -138,7 +137,6 @@ Item
         height: parent.height - footer_rect.height - tabbar.height
 
         property string path
-        WPN114.Node on path { path: "/views/mix/display" }
 
         onPathChanged:
         {

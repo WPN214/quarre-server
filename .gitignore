@@ -1,3 +1,8 @@
+/audio
+/build
+/modules
+*.wav
+*.reapeaks
 *.DS_Store
 
 # C++ objects and libs

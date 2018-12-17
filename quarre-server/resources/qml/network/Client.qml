@@ -1,5 +1,6 @@
 import QtQuick 2.0
-import WPN114 1.0 as WPN114
+import WPN114.Network 1.0 as WPN114
+import WPN114.Time 1.0 as Time
 
 Item
 {
@@ -47,7 +48,7 @@ Item
         var interaction_arr = getInteractionMessage(interaction);
         remote.sendMessage("/interactions/next/begin", interaction_arr, true);
 
-        if ( interaction.length === WPN114.TimeNode.Infinite )
+        if ( interaction.length === Time.TimeNode.Infinite )
              root.status = "active_infinite";
         else root.status = "active";
     }

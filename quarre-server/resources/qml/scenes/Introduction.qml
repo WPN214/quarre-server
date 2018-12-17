@@ -1,5 +1,7 @@
 import QtQuick 2.0
-import WPN114 1.0 as WPN114
+import WPN114.Time 1.0 as WPN114
+import WPN114.Audio.Sampling 1.0
+import WPN114.Audio.Spatial 1.0
 import ".."
 import "../engine"
 
@@ -53,21 +55,17 @@ Scene
         }
     }
 
-    WPN114.StereoSource //=========================================== DIGIBIRDS
+    StereoSource //=========================================== DIGIBIRDS
     {
         parentStream: rooms
         xspread: 0.35
         diffuse: 0.49
         fixed: true
 
-        exposePath: fmt( "audio/digibirds/source" )
-
-        WPN114.StreamSampler { id: digibirds;
-            exposePath: fmt("audio/digibirds");
-            path: "audio/introduction/digibirds.wav" }
+        StreamSampler { id: digibirds; path: "audio/introduction/digibirds.wav" }
     }
 
-    WPN114.StereoSource //=========================================== SWARMS
+    StereoSource //=========================================== SWARMS
     {
         parentStream: rooms
         xspread: 0.27
@@ -75,122 +73,85 @@ Scene
         fixed: true
         y: 0.9
 
-        exposePath: fmt("audio/swarms/source")
-
-        WPN114.StreamSampler { id: swarms;
-            exposePath: fmt("audio/swarms");
-            path: "audio/introduction/swarms.wav" }
+        StreamSampler { id: swarms; path: "audio/introduction/swarms.wav" }
     }
 
-    WPN114.StereoSource //=========================================== DRAGON_HI
+    StereoSource //=========================================== DRAGON_HI
     {
         parentStream: rooms
         xspread: 0.28
         fixed: true
         y: 0.65
 
-        exposePath: fmt("audio/dragon-hi/source")
-
-        WPN114.StreamSampler { id: dragon_hi; dBlevel: 3.00
-            exposePath: fmt("audio/dragon-hi");
-            path: "audio/introduction/dragon-hi.wav" }
+        StreamSampler { id: dragon_hi; dBlevel: 3; path: "audio/introduction/dragon-hi.wav" }
     }
 
-    WPN114.StereoSource //=========================================== DRAGON_LO
+    StereoSource //=========================================== DRAGON_LO
     {
         parentStream: rooms
         xspread: 0.28
         fixed: true
         y: 0.25
 
-        exposePath: fmt("audio/dragon-lo/source")
-
-        WPN114.StreamSampler { id: dragon_lo; dBlevel: 6.00
-            exposePath: fmt("audio/dragon-lo")
-            path: "audio/introduction/dragon-lo.wav" }
+        StreamSampler { id: dragon_lo; dBlevel: 6.00; path: "audio/introduction/dragon-lo.wav" }
     }
 
-    WPN114.StereoSource //=========================================== WALKING_1
+    StereoSource //=========================================== WALKING_1
     {
         parentStream: rooms
         xspread: 0.2
         fixed: true
 
-        exposePath: fmt("audio/walking-1/source")
-
-        WPN114.StreamSampler { id: walking_1;
-            exposePath: fmt("audio/walking-1");
-            path: "audio/introduction/walking-1.wav" }
+        StreamSampler { id: walking_1; path: "audio/introduction/walking-1.wav" }
     }
 
-    WPN114.StereoSource //=========================================== WALKING_2
+    StereoSource //=========================================== WALKING_2
     {
         parentStream: rooms
         xspread: 0.15
         fixed: true
         y: 0.43
 
-        exposePath: fmt("audio/walking-2/source")
-
-        WPN114.StreamSampler { id: walking_2;
-            exposePath: fmt( "audio/walking-2")
-            path: "audio/introduction/walking-2.wav" }
+        StreamSampler { id: walking_2; path: "audio/introduction/walking-2.wav" }
     }
 
-    WPN114.StereoSource //=========================================== SYNTH
+    StereoSource //=========================================== SYNTH
     {
         parentStream: rooms
         xspread: 0.25
         fixed: true
         y: 0.85
 
-        exposePath: fmt("audio/synth/source")
-
-        WPN114.StreamSampler { id: synth; dBlevel: 6.00
-            exposePath: fmt("audio/synth");
-            path: "audio/introduction/synth.wav" }
+        StreamSampler { id: synth; dBlevel: 6.00; path: "audio/introduction/synth.wav" }
     }
 
-    WPN114.StereoSource //=========================================== SPRING
+    StereoSource //=========================================== SPRING
     {
-        parentStream: rooms
         yspread: 0.25
         diffuse: 0.7
         bias: 0.85
         fixed: true
 
-        exposePath: fmt("audio/spring/source")
-
-        WPN114.StreamSampler { id: spring;
-            exposePath: fmt("audio/spring");
-            path: "audio/introduction/spring.wav" }
+        StreamSampler { id: spring; path: "audio/introduction/spring.wav" }
     }
 
-    WPN114.StereoSource //=========================================== RIVER
+    StereoSource //=========================================== RIVER
     {
         parentStream: rooms
         yspread: 0.25
         diffuse: 0.55
         fixed: true
 
-        exposePath: fmt("audio/river/source")
-
-        WPN114.StreamSampler { id: river;
-            exposePath: fmt("audio/river");
-            path: "audio/introduction/river.wav" }
+        StreamSampler { id: river; path: "audio/introduction/river.wav" }
     }
 
-    WPN114.StereoSource //=========================================== VERB
+    StereoSource //=========================================== VERB
     {
         parentStream: rooms
         xspread: 0.25
         diffuse: 0.6
         fixed: true
 
-        exposePath: fmt("audio/verb/source")
-
-        WPN114.StreamSampler { id: verb;
-            exposePath: fmt("audio/verb");
-            path: "audio/introduction/verb.wav" }
+        StreamSampler { id: verb; path: "audio/introduction/verb.wav" }
     }
 }

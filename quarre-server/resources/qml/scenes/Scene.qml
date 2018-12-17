@@ -1,5 +1,7 @@
 import QtQuick 2.0
-import WPN114 1.0 as WPN114
+import WPN114.Network 1.0 as Net
+import WPN114.Audio.Spatial 1.0 as Spatial
+import WPN114.Time 1.0 as Time
 import ".."
 
 Item
@@ -23,8 +25,8 @@ Item
     signal next ( );
     signal end  ( );
 
-    WPN114.Node { path: fmt( "end" ); type: WPN114.Type.Impulse; onValueReceived: root.stop() }
-    WPN114.Node { path: fmt( "begin" ); type: WPN114.Type.Impulse; onValueReceived: root.start() }
+    Net.Node { path: fmt( "end" ); type: Net.Type.Impulse; onValueReceived: root.stop() }
+    Net.Node { path: fmt( "begin" ); type: Net.Type.Impulse; onValueReceived: root.start() }
 
     function fmt(str)
     {
@@ -92,13 +94,13 @@ Item
         });
     }
 
-    property WPN114.Rooms rooms: WPN114.Rooms
+    property Spatial.Rooms rooms: Spatial.Rooms
     {
         setup:  roomsetup
         active: false
     }
 
-    property WPN114.TimeNode scenario
+    property Time.TimeNode scenario
     Component.onCompleted:
     {
         scenario.end.connect(root.onEnd);
