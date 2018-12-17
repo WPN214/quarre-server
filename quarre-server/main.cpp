@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);   
 
     QQuickWidget view;
-    view.setSource(QUrl::fromLocalFile("resources/qml/main.qml"));
+    view.setSource(QUrl("qrc:/main.qml"));
     view.show();
 
     return app.exec();
