@@ -1,0 +1,30 @@
+[submodule "dependencies/WPN114-audio"]
+	path = dependencies/WPN114-audio
+	url = https://github.com/WPN214/WPN114-audio
+[submodule "dependencies/WPN114-network"]
+	path = dependencies/WPN114-network
+	url = https://github.com/WPN214/WPN114-network
+[submodule "dependencies/WPN114-audio-utilities"]
+	path = dependencies/WPN114-audio-utilities
+	url = https://github.com/WPN214/WPN114-audio-utilities
+[submodule "dependencies/WPN114-fft-effects"]
+	path = dependencies/WPN114-fft-effects
+	url = https://github.com/WPN214/WPN114-fft-effects
+[submodule "dependencies/WPN114-jseffects"]
+	path = dependencies/WPN114-jseffects
+	url = https://github.com/WPN214/WPN114-jseffects
+[submodule "dependencies/WPN114-sampling"]
+	path = dependencies/WPN114-sampling
+	url = https://github.com/WPN214/WPN114-sampling
+[submodule "dependencies/WPN114-spatial"]
+	path = dependencies/WPN114-spatial
+	url = https://github.com/WPN214/WPN114-spatial
+[submodule "dependencies/WPN114-synthesis"]
+	path = dependencies/WPN114-synthesis
+	url = https://github.com/WPN214/WPN114-synthesis
+[submodule "dependencies/WPN114-time"]
+	path = dependencies/WPN114-time
+	url = https://github.com/WPN214/WPN114-time
+[submodule "dependencies/WPN114-vst"]
+	path = dependencies/WPN114-vst
+	url = https://github.com/WPN214/WPN114-vst
