@@ -1,45 +1,82 @@
 import QtQuick 2.10
-import WPN114 1.0 as WPN114
+import WPN114.Audio 1.1 as Audio
+import WPN114.Network 1.1 as Network
 
 Item
 {
     id: root
 
-    property string path: "/scenario/instruments"
+    property string
+    path: "/scenario/instruments"
 
-    property alias rooms:               instruments_rooms
-    property alias kaivo_1:             kaivo_1
-    property alias kaivo_2:             kaivo_2
-    property alias k1_fork_921:         k1_fork_921
-    property alias k1_fork_lavaur:      k1_fork_lavaur
-    property alias k2_fork_921:         k2_fork_921
-    property alias k2_fork_lavaur:      k2_fork_lavaur
-    property alias k1_fork_amp:         k1_fork_amp
+    property alias
+    rooms: instruments_rooms
 
-    property int autochurch:    0
-    property int churchbells:   1
-    property int yguitar:       2
-    property int jguitar:       3
-    property int tguitar:       4
-    property int markhor:       5
-    property int niwood:        6
-    property int spring:        7
-    property int vare:          8
-    property int rainbells:     9
-    property int varerhythm:    10
+    property alias
+    kaivo_1: kaivo_1
 
-    function fmt(str)
-    {
+    property alias
+    kaivo_2: kaivo_2
+
+    property alias
+    k1_fork_921: k1_fork_921
+
+    property alias
+    k1_fork_lavaur: k1_fork_lavaur
+
+    property alias
+    k2_fork_921: k2_fork_921
+
+    property alias
+    k2_fork_lavaur: k2_fork_lavaur
+
+    property alias
+    k1_fork_amp: k1_fork_amp
+
+    property int
+    autochurch: 0
+
+    property int
+    churchbells: 1
+
+    property int
+    yguitar: 2
+
+    property int
+    jguitar: 3
+
+    property int
+    tguitar: 4
+
+    property int
+    markhor: 5
+
+    property int
+    niwood: 6
+
+    property int
+    spring: 7
+
+    property int
+    vare: 8
+
+    property int
+    rainbells: 9
+
+    property int
+    varerhythm: 10
+
+    function fmt(str) {
         return path+"/"+str
     }
 
     WPN114.Rooms
     {
         id: instruments_rooms
+        name: "/scenario/instruments/rooms"
         active: false
         parentStream: audiostream
         setup: roomsetup
-        exposePath: "/scenario/instruments/rooms"
 
         WPN114.StereoSource //====================================================  KAIVO_1
         {
@@ -48,7 +85,7 @@ Item
             diffuse: 0.55
             y: 0.75
 
-            exposePath: fmt("kaivo-1/source")
+            name: fmt("kaivo-1/source")
 
             WPN114.AudioPlugin //==============================================
             {

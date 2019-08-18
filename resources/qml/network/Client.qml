@@ -1,18 +1,35 @@
 import QtQuick 2.0
-import WPN114.Network 1.0 as WPN114
+import WPN114.Network 1.1 as Network
 import WPN114.Time 1.0 as Time
 
 Item
 {
     id: root
-    property int number: 0
-    property int interaction_count: 0
-    property bool connected: false
-    property string status: "disconnected"
-    property alias remote: remote
 
-    WPN114.Node on interaction_count { device: net.server; path: "/clients/"+number+"/n_interactions" }
-    WPN114.Node on status { device: net.server; path: "/clients/"+number+"/status" }
+    property int
+    number: 0
+
+    property int
+    interaction_count: 0
+
+    property bool
+    connected: false
+
+    property string
+    status: "disconnected"
+
+    property alias
+    remote: remote
+
+    Network.Node on interaction_count {
+        tree: net.server.tree()
+        path: "/clients/"+number+"/n_interactions"
+    }
+
+    Network.Node on status {
+        tree: net.server.tree()
+        path: "/clients/"+number+"/status"
+    }
 
     function getInteractionMessage(interaction)
     {
@@ -35,31 +52,34 @@ Item
     function notifyInteraction(interaction)
     {
         var interaction_arr = getInteractionMessage(interaction);
-        remote.sendMessage("/interactions/next/incoming", interaction_arr, true);        
+        remote.send("/interactions/next/incoming", interaction_arr, true);
 
         interaction.owners.push(root);
         root.interaction_count++;
-        if ( status === "active") root.status = "active_incoming";
+
+        if  (status === "active")
+             root.status = "active_incoming";
         else root.status = "incoming";
     }
 
     function beginInteraction(interaction)
     {
         var interaction_arr = getInteractionMessage(interaction);
-        remote.sendMessage("/interactions/next/begin", interaction_arr, true);
+        remote.send("/interactions/next/begin", interaction_arr, true);
 
-        if ( interaction.length === Time.TimeNode.Infinite )
+        if (interaction.length === Time.TimeNode.Infinite)
              root.status = "active_infinite";
         else root.status = "active";
     }
 
     function endInteraction(interaction)
     {
-        remote.sendMessage("/interactions/current/end", 0, true);
-        if ( status === "active_incoming" ) status = "incoming";
-        else if ( status === "active" ) status = "idle";
-        else if ( status === "active_infinite" ) status = "idle";
-        else if ( status === "incoming" ) status = "idle";
+        remote.send("/interactions/current/end", 0, true);
+
+        if (status === "active_incoming")       status = "incoming";
+        else if (status === "active")           status = "idle";
+        else if (status === "active_infinite")  status = "idle";
+        else if (status === "incoming")         status = "idle";
     }
 
     function getActiveCountdown()
@@ -67,7 +87,7 @@ Item
         return remote.value("/interactions/current/countdown");
     }
 
-    WPN114.OSCQueryClient
+    WPN114.Client
     {
         // when connected, remote will download the different module files
         // then go into idle state
@@ -81,15 +101,13 @@ Item
             remote.listen( "/interactions/next/countdown" );
             remote.listen( "/interactions/current/countdown" );
 
-            if ( main_scenario.running )
-            {
-                remote.sendMessage("/scenario/running", true, true);
-                remote.sendMessage("/scenario/scene/name", main_scenario.runningScene.name(), true);
+            if (main_scenario.running) {
+                remote.send("/scenario/running", true, true);
+                remote.send("/scenario/scene/name", main_scenario.runningScene.name(), true);
             }
         }
 
-        onDisconnected:
-        {
+        onDisconnected: {
             root.status = "disconnected"
             root.connected = false;
         }

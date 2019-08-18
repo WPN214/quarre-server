@@ -1,18 +1,21 @@
 import QtQuick 2.0
-import WPN114.Network 1.0 as WPN114
+import WPN114.Network 1.1 as Network
 
 Item
 {
-    property alias server:  query_server
-    property alias clients: client_manager
+    property alias
+    server: query_server
 
-    WPN114.OSCQueryServer //================================================= MAIN_SERVER
+    property alias
+    clients: client_manager
+
+    Network.Server //================================================= MAIN_SERVER
     {
         id: query_server
-        singleDevice: true
+        singleton: true
         name: "quarre-server"
-        tcpPort: 5678
-        udpPort: 1234
+        tcp: 5678
+        udp: 1234
 
         Component.onCompleted:
         {
@@ -32,20 +35,20 @@ Item
         maxClients: 4
     }
 
-    WPN114.FolderNode //==================================================== MODULES
+    Network.Folder //==================================================== MODULES
     {
-        device: module_server
+        tree: module_server.tree()
         recursive: true
-        folderPath: "/Users/pchd/Repositories/quarre-server/resources/qml/modules"
         path: "/modules"
+        folder: "../modules"
         filters: ["*.qml"]
     }
 
-    WPN114.OSCQueryServer //================================================ MODULE_SERVER
+    Network.Server //================================================ MODULE_SERVER
     {
         id: module_server
         name: "quarre-modules"
-        tcpPort: 8576
-        udpPort: 4132
+        tcp: 8576
+        udp: 4132
     }
 }

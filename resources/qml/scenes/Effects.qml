@@ -1,12 +1,19 @@
 import QtQuick 2.0
-import WPN114 1.0 as WPN114
+import WPN114.Audio 1.1 as Audio
 
 Item
 {
-    property alias reverb:      reverb
-    property alias lavaur:      reverb_lavaur
-    property alias amplitube:   amplitube
-    property alias rooms:       effects_rooms
+    property alias
+    reverb: reverb
+
+    property alias
+    lavaur: reverb_lavaur
+
+    property alias
+    amplitube: amplitube
+
+    property alias
+    rooms: effects_rooms
 
     WPN114.Rooms
     {

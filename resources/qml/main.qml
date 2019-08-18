@@ -2,7 +2,8 @@ import QtQuick 2.9
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 
-import WPN114.Audio 1.0
+import WPN114.Audio 1.1 as Audio
+
 import WPN114.Audio.Spatial 1.0 as Spatial
 import WPN114.Audio.Utilities 1.0
 

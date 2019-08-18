@@ -1,8 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>control/PushApplicationControl.qml</file>
-        <file>control/PushScene.qml</file>
         <file>engine/Functions.qml</file>
         <file>engine/Interaction.qml</file>
         <file>engine/InteractionExecutor.qml</file>
@@ -40,7 +38,6 @@
         <file>views/RoomsView.qml</file>
         <file>views/SceneMixView.qml</file>
         <file>network/NetworkManager.qml</file>
-        <file>control/PresetsManager.qml</file>
         <file>scenes/demos/Demos.qml</file>
         <file>scenes/Interactions.qml</file>
         <file>scenes/demos/Temples.qml</file>
