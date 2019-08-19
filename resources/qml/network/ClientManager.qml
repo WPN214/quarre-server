@@ -74,36 +74,36 @@ Item
     function notifyStart() // ======================================== START_SCENARIO
     {
         for (var c = 0; c < maxClients; ++c) {
-            var client = clients.itemAt(c);
-            if (client.connected)
-                client.remote.send("/scenario/running", true, true);
+             var client = clients.itemAt(c);
+             if (client.connected)
+                 client.remote.send("/scenario/running", true, true);
         }
     }
 
     function notifyEnd() // ======================================== END_SCENARIO
     {
         for (var c = 0; c < maxClients; ++c) {
-            var client = clients.itemAt(c);
-            if (client.connected)
-                client.remote.send("/scenario/running", false, true);
+             var client = clients.itemAt(c);
+             if (client.connected)
+                 client.remote.send("/scenario/running", false, true);
         }
     }
 
     function notifyReset()
     {
         for (var c = 0; c < maxClients; ++c) {
-            var client = clients.itemAt(c);
-            if (client.connected )
-                client.remote.send("/scenario/reset", 0, true);
+             var client = clients.itemAt(c);
+             if (client.connected )
+                 client.remote.send("/scenario/reset", 0, true);
         }
     }
 
     function notifyScene(name) // ======================================== SCENE_CHANGE
     {
         for (var c = 0; c < maxClients; ++c) {
-            var client = clients.itemAt(c);
-            if (client.connected )
-                client.remote.send("/scenario/scene/name", name, true);
+             var client = clients.itemAt(c);
+             if (client.connected )
+                 client.remote.send("/scenario/scene/name", name, true);
         }
     }
 
@@ -117,10 +117,10 @@ Item
         onValueReceived:
         {
             for (var c = 0; c < maxClients; ++c) {
-                var client = clients.itemAt(c);
-                if (client.connected) {
-                    client.remote.send("/interactions/reset", 0, true);
-                    client.interaction_count = 0;
+                 var client = clients.itemAt(c);
+                 if (client.connected) {
+                     client.remote.send("/interactions/reset", 0, true);
+                     client.interaction_count = 0;
                 }
             }
         }
@@ -135,15 +135,15 @@ Item
             console.log("New connection:", hostaddr);
 
             for (var c = 0; c < maxClients; ++c) {
-                var client = clients.itemAt(c);
-                if (!client.connected) {
+                 var client = clients.itemAt(c);
+                 if (!client.connected) {
                     // we have to set connected property explicitely before
                     // the connection is actually made
                     // preventing client to connect multiple times to different remotes
-                    client.connected = true;
-                    client.remote.connect(hostaddr);
-                    nclients.value = nclients.value+1;
-                    break;
+                     client.connected = true;
+                     client.remote.connect(hostaddr);
+                     nclients.value = nclients.value+1;
+                     break;
                 }
             }
         }

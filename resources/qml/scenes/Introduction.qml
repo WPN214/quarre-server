@@ -1,7 +1,7 @@
 import QtQuick 2.0
-import WPN114.Time 1.0 as WPN114
-import WPN114.Audio.Sampling 1.0
-import WPN114.Audio.Spatial 1.0
+import WPN114.Time 1.1 as Time
+import WPN114.Audio.Sampling 1.1 as Audio
+import WPN114.Audio.Spatial 1.1 as Spatial
 import ".."
 import "../engine"
 
@@ -9,30 +9,30 @@ Scene
 {
     id: root
 
-    scenario: WPN114.TimeNode
+    scenario: Time.Node
     {
-        source:     audiostream
-        duration:   min( 4.42 )
+        source:    audiostream
+        duration:  min(4.42)
 
         onStart:
         {
-            digibirds.play      ( );
-            swarms.play         ( );
-            dragon_hi.play      ( );
-            dragon_lo.play      ( );
-            walking_1.play      ( );
-            walking_2.play      ( );
-            synth.play          ( );
-            spring.play         ( );
-            river.play          ( );
-            verb.play           ( );
+            digibirds.play      ();
+            swarms.play         ();
+            dragon_hi.play      ();
+            dragon_lo.play      ();
+            walking_1.play      ();
+            walking_2.play      ();
+            synth.play          ();
+            spring.play         ();
+            river.play          ();
+            verb.play           ();
 
             rooms.dBlevel = -3
-            net.clients.notifyStart( );
+            net.clients.notifyStart();
         }
 
         // Starting next scene at 3:00 (after the xroads interaction)
-        WPN114.TimeNode { date: min( 3 ); onStart: root.next() }
+        Time.Node { date: min(3); onStart: root.next() }
 
         InteractionExecutor //======================================= TUTORIAL
         {
@@ -55,26 +55,33 @@ Scene
         }
     }
 
-    StereoSource //=========================================== DIGIBIRDS
-    {
-        parentStream: rooms
-        xspread: 0.35
-        diffuse: 0.49
-        fixed: true
+    //---------------------------------------------------------------------------------------------
+    // AUDIO
+    //---------------------------------------------------------------------------------------------
 
-        StreamSampler { id: digibirds; path: "audio/introduction/digibirds.wav" }
+    Audio.Sampler
+    {
+        id: digibirds
+        name: "digibirds"
+        path: "audio/introduction/digibirds.wav"
+        audio_out.assign: rooms
+        stream: true
+        spatial.width: 0.80
+        spatial.align: Audio.HVCenter
     }
 
-    StereoSource //=========================================== SWARMS
+    Audio.Sampler
     {
-        parentStream: rooms
-        xspread: 0.27
-        diffuse: 0.17
-        fixed: true
-        y: 0.9
-
-        StreamSampler { id: swarms; path: "audio/introduction/swarms.wav" }
+        id: swarms
+        name: "swarms"
+        path: "audio/introduction/swarms.wav"
+        audio_out.assign: rooms
+        stream: true
+        spatial.width: 0.54
+        spatial.align: Audio.HCenter
+        spatial.y: 0.9
     }
+
 
     StereoSource //=========================================== DRAGON_HI
     {

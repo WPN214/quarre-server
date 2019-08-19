@@ -87,7 +87,7 @@ Item
         return remote.value("/interactions/current/countdown");
     }
 
-    WPN114.Client
+    Network.Client
     {
         // when connected, remote will download the different module files
         // then go into idle state

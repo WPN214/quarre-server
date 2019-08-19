@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import WPN114.Audio 1.1 as Audio
+import WPN114.Network 1.1 as Network
+import WPN114.FFTEffects 1.1 as FFT
 
 Item
 {
@@ -15,46 +17,40 @@ Item
     property alias
     rooms: effects_rooms
 
-    WPN114.Rooms
+    Audio.Rooms
     {
         id: effects_rooms
-        active: true
-        parentStream: audiostream
+        name: "rooms"
         setup: roomsetup
-        exposePath: "/scenario/effects/rooms"
+        audio_out.assign: master;
 
-        WPN114.StereoSource //----------------------------------------------------- ALTIVERB
+        FFT.Convolver //============================================== 921
         {
-            xspread: 0.25
-            diffuse: 0.2
-            fixed: true
-            y: 0.5
+            id: reverb
+            name: "921"
+            ir: "audio/impulse-responses/921MST.wav"
+            spatial.height: 1
+            spatial.width: 1
+        }
 
-            exposePath: "/scenario/effects/reverb/source"
+        FFT.Convolver //============================================== LAVAUR
+        {
+            id: reverb_lavaur
+            name: "lavaur"
+            ir: "audio/impulse-responses/LAVAUR22ST.wav"
+            active: false
+            spatial.height: 1
+            spatial.width: 1
+        }
 
-            WPN114.Convolver //============================================== 921
-            {                
-                id: reverb
-                active: true
-                irPath: "audio/impulse-responses/921MST.wav"
-                exposePath: "/scenario/effects/reverb/921"
-            }
-
-            WPN114.Convolver //============================================== LAVAUR
-            {
-                id: reverb_lavaur
-                active: false
-                irPath: "audio/impulse-responses/LAVAUR22ST.wav"
-                exposePath: "/scenario/effects/reverb/lavaur"
-            }
-
-            WPN114.Convolver //============================================== AMPLITUBE
-            {
-                id: amplitube
-                active: false
-                irPath: "audio/impulse-responses/AMPDEFAULT.wav"
-                exposePath: "/scenario/effects/amplitube"
-            }
+        FFT.Convolver //============================================== AMPLITUBE
+        {
+            id: amplitube
+            name: "amplitube"
+            ir: "audio/impulse-responses/AMPDEFAULT.wav"
+            active: false
+            spatial.height: 1
+            spatial.width: 1
         }
     }
 }

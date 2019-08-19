@@ -5,9 +5,13 @@ Item
 {
     id: root
 
-    property int xroads_result: 0
+    property int
+    xroads_result: 0
 
-    property Interaction tutorial: Interaction // =============================== INTRODUCTION_TUTORIAL
+    //---------------------------------------------------------------------------------------------
+    property Interaction
+    tutorial: Interaction
+    //---------------------------------------------------------------------------------------------
     {
         title: "Didacticiel"
         module: "quarre/Tutorial.qml"
@@ -15,7 +19,10 @@ Item
         description: "Présentation du fonctionnement global de l'application"
     }
 
-    property Interaction xroads: Interaction // =============================== INTRODUCTION_XROADS
+    //---------------------------------------------------------------------------------------------
+    property Interaction
+    xroads: Interaction
+    //---------------------------------------------------------------------------------------------
     {
         title: "Croisée des chemins"
         module: "quarre/Vote.qml"
@@ -25,30 +32,37 @@ Item
         onInteractionBegin:
         {
             owners.forEach(function(owner) {
-                if ( owner.connected )
-                     owner.remote.listen("/modules/crossroads/selection");
+                if (owner.connected)
+                    owner.remote.listen("/modules/crossroads/selection");
             });
         }
 
         onInteractionEnd:
         {
             // parse selection for each connected client
-            var res_zero = 0, res_one = 0, res_two = 0, total = 0;
+            var res0 = 0, res1 = 0, res2 = 0, total = 0;
 
             owners.forEach(function(owner) {
-                if ( owner.connected )
-                {
+                if (owner.connected) {
                     var res = owner.remote.value("/modules/crossroads/selection");
-                    if ( res === 0 ) res_zero++;
-                    else if ( res === 1 ) res_one++;
-                    else if ( res === 2 ) res_two++;
+
+                    switch(res) {
+                    case 0: res0++; break;
+                    case 1: res1++; break;
+                    case 2: res2++;
+                    }
+
                     owner.remote.ignore("/modules/crossroads/selection");
                 }
             });
 
-            if ( res_one > res_zero && res_one > res_two ) total = 0;
-            else if ( res_two > res_zero && res_two > res_one ) total = 1;
-            else total = Math.floor(Math.random()*2);
+            if (res1 > res0 && res1 > res2)
+                total = 0;
+            else
+                if (res2 > res0 && res2 > res1)
+                total = 1;
+            else
+                total = Math.floor(Math.random()*2);
 
             root.xroads_result = total;
         }

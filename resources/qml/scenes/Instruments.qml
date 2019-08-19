@@ -1,13 +1,10 @@
 import QtQuick 2.10
 import WPN114.Audio 1.1 as Audio
-import WPN114.Network 1.1 as Network
+import WPN114.Audio.Plugins 1.1 as Plugins
 
 Item
 {
     id: root
-
-    property string
-    path: "/scenario/instruments"
 
     property alias
     rooms: instruments_rooms
@@ -33,135 +30,93 @@ Item
     property alias
     k1_fork_amp: k1_fork_amp
 
-    property int
-    autochurch: 0
-
-    property int
-    churchbells: 1
-
-    property int
-    yguitar: 2
-
-    property int
-    jguitar: 3
-
-    property int
-    tguitar: 4
-
-    property int
-    markhor: 5
-
-    property int
-    niwood: 6
-
-    property int
-    spring: 7
-
-    property int
-    vare: 8
-
-    property int
-    rainbells: 9
-
-    property int
-    varerhythm: 10
-
-    function fmt(str) {
-        return path+"/"+str
+    enum Presets
+    {
+        Autochurch,
+        Churchbells,
+        Yguitar,
+        Jguitar,
+        Tguitar,
+        Markhor,
+        Niwood,
+        Spring,
+        Vare,
+        Rainbells,
+        VareRhythm
     }
 
-    WPN114.Rooms
+    //---------------------------------------------------------------------------------------------
+    Audio.Rooms
+    //---------------------------------------------------------------------------------------------
     {
         id: instruments_rooms
-        name: "/scenario/instruments/rooms"
+        name: "instruments"
         active: false
-        parentStream: audiostream
         setup: roomsetup
+        audio_out.assign: master
 
-        WPN114.StereoSource //====================================================  KAIVO_1
+        //-----------------------------------------------------------------------------------------
+        Plugins.AudioPlugin
+        //-----------------------------------------------------------------------------------------
         {
-            id: kaivo_1_source
-            xspread: 0.25
-            diffuse: 0.55
-            y: 0.75
+            id: kaivo_1
+            name: "kaivo_1"
+            path: "audio/plugins/Kaivo"
+            active: false
+            spatial.width: 1
+            spatial.height: 1
 
-            name: fmt("kaivo-1/source")
+            function setPreset(enm) {
+                kaivo_1.programChange(0, enm);
+            }
 
-            WPN114.AudioPlugin //==============================================
-            {
-                id: kaivo_1
-                path: "/Library/Audio/Plug-Ins/VST/Kaivo.vst"
-                exposePath: fmt("kaivo-1")
+            Audio.Connection on audio_out {
+                id: k1_fork_921
+                dest: effects.reverb;
+                prefader: true
+            }
+
+            Audio.Connection on audio_out {
+                id: k1_fork_lavaur
+                dest: effects.lavaur
                 active: false
+            }
 
-                function setPreset(enm) {
-                    kaivo_1.programChange(0, enm);
-                }
-
-                WPN114.Fork // =============================================== FORK_921
-                {
-                    id: k1_fork_921
-                    exposePath: fmt("kaivo-1/forks/921")
-                    target: effects.reverb;
-                    prefader: true                    
-                }
-
-                WPN114.Fork // =============================================== FORK_LAVAUR
-                {
-                    id: k1_fork_lavaur
-                    exposePath: fmt("kaivo-1/forks/lavaur")
-                    active: false
-                    target: effects.lavaur
-                    prefader: true                    
-                }
-
-                WPN114.Fork // =============================================== FORK_AMPLITUBE
-                {
-                    id: k1_fork_amp
-                    exposePath: fmt("kaivo-1/forks/amplitube")
-                    target: effects.amplitube;
-                    prefader: true
-                    active: false                    
-                }
+            Audio.Connection on audio_out {
+                id: k1_fork_amp
+                dest: effects.amplitube
+                prefader: true
+                active: false
             }
         }
 
-        WPN114.StereoSource //================================================== KAIVO_2
+
+        //-----------------------------------------------------------------------------------------
+        Plugins.AudioPlugin
+        //-----------------------------------------------------------------------------------------
         {
-            id: kaivo_2_source
-            exposePath: fmt("kaivo-2/source")
+            id: kaivo_2
+            name: "kaivo_2"
+            path: "audio/plugins/Kaivo"
+            active: false
+            spatial.width: 1
+            spatial.height: 1
 
-            xspread: 0.25
-            diffuse: 0.55
-            y: 0.75            
+            function setPreset(enm) {
+                kaivo_2.programChange(0, enm);
+            }
 
-            WPN114.AudioPlugin //==============================================
-            {
-                id: kaivo_2
-                exposePath: fmt("kaivo-2")
-                path: "/Library/Audio/Plug-Ins/VST/Kaivo.vst"                
+            Audio.Connection on audio_out {
+                id: k2_fork_921
+                dest: effects.reverb
+                prefader: true
+            }
+
+            Audio.Connection on audio_out {
+                id: k2_fork_lavaur
+                dest: effects.lavaur
                 active: false
-
-                function setPreset(enm) {
-                    kaivo_2.programChange(0, enm);
-                }
-
-                WPN114.Fork // =============================================== FORK_921
-                {
-                    id: k2_fork_921
-                    exposePath: fmt("kaivo-2/forks/921")
-                    target: effects.reverb
-                    prefader: true                    
-                }
-
-                WPN114.Fork // =============================================== FORK_LAVAUR
-                {
-                    id: k2_fork_lavaur
-                    exposePath: fmt("kaivo-2/forks/lavaur")
-                    target: effects.lavaur
-                    active: false
-                    prefader: true                    
-                }
+                prefader: true
             }
         }
     }

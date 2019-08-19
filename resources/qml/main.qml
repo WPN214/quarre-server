@@ -1,17 +1,14 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
-
 import WPN114.Audio 1.1 as Audio
-
-import WPN114.Audio.Spatial 1.0 as Spatial
-import WPN114.Audio.Utilities 1.0
+import WPN114.Audio.Spatial 1.1 as Spatial
+import WPN114.Audio.Utilities 1.1
 
 import "scenes"
 import "views"
 import "engine"
 import "network"
-import "control"
 
 // TODO: volume and spatialization presets
 // TODO: FLAC audio
@@ -28,49 +25,38 @@ Rectangle
     // ================================================================================== CORE
 
     NetworkManager   { id: net  }
-    PresetsManager   { id: presets }
     Functions        { id: functions }
     Scenario         { id: main_scenario }
     MainView         { id: mainview }
 
-    Spatial.RoomSetup //================================================================= ROOM_SETUP
-    {
-        id: roomsetup;
+    // spatial setup here missing
 
-        Spatial.SpeakerRing
+    Audio.Graph
+    {
+        rate: 44100; vector: 512
+        external.name: "quarre-server"
+        external.backend: Audio.Backend.Jack
+
+        Audio.Output
         {
-            nspeakers: 8;
-            horizontalInfluence: 0.707
-            elevation: 0.5
-            offset: -Math.PI/8;
-            radius: 1
-        }
-    }
+            id: main_out
+            name: "audio_out"
+            nchannels: 8
+            offset: 0
 
-    AudioStream //=============================================================== AUDIO
-    {
-        id:             audiostream
-        outDevice:      "Soundflower (64ch)"
-        numOutputs:     8
-        sampleRate:     44100
-        blockSize:      512
-        active:         false
-
-        inserts:
-        [
-            PeakRMS
+            Audio.PeakRMS
             {
-                id:      vu_master
-                source:  audiostream
-                numInputs: 8
-                numOutputs: 8
-                active:  true
+                id: master
+                nchannels: 8
+                rate: 15 // Hz
 
-                onRms:   mainview.vumeters.processRms  ( value )
-                onPeak:  mainview.vumeters.processPeak ( value )
+                onRms:
+                    mainview.vumeters.processRms  ( value )
 
-                refreshRate: 15 // Hz
+                onPeak:
+                    mainview.vumeters.processPeak ( value )
             }
-        ]
+        }
+
     }
 }

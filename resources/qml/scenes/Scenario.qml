@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import WPN114.Time 1.0 as WPN114
+import WPN114.Time 1.1 as Time
 
 import "stonepath"
 import "woodpath"
@@ -11,7 +11,9 @@ Scene
     id: root
     path: "/scenario"
 
-    property Scene runningScene
+    property Scene
+    runningScene
+
     notify: false
     audio: false
 
@@ -64,42 +66,34 @@ Scene
         }
     }
 
-    Connections // --------------------------------------------------------- CROSSROADS_CONNECTIONS
-    {
+    Connections {
         target: introduction
-        onNext:
-        {
-            if ( interactions.xroads_result === 0 )
+        onNext: {
+            if (interactions.xroads_result === 0)
                  woodpath.start();
             else stonepath.start();
         }
     }
 
-    Connections //--------------------------------------------------------- ENDING_CONNECTIONS
-    {
+    Connections {
         target: stonepath
-        onEnd:
-        {
+        onEnd: {
             wpn214.fade_target = stonepath.ammon
             wpn214.start();
         }
     }
 
-    Connections
-    {
+    Connections {
         target: woodpath
-        onEnd:
-        {
+        onEnd: {
             wpn214.fade_target = woodpath.jomon
             wpn214.start();
         }
     }
 
-    Connections
-    {
+    Connections {
         target: wpn214
-        onEnd:
-        {
+        onEnd: {
             reset();
             scenario.start();
         }
