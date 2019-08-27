@@ -2,8 +2,9 @@
       echo "Downloading server's audio files..."
       wget https://wpn214.com/download/quarre/audio.zip
       echo "Unpacking audio files..."
-      tar xf audio.zip
+      7z x  audio.zip
       echo "Cleaning up"
+      rm -rf audio.zip
 fi
 
 echo "Building project"

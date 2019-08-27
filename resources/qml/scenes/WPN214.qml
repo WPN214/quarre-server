@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import WPN114 1.0 as WPN114
+import WPN114.Time 1.1 as Time
 import ".."
 import "../engine"
 
@@ -7,13 +7,14 @@ Scene
 {
     id: root
 
-    property var fade_target: woodpath.jomon
+    property var
+    fade_target: woodpath.jomon
 
-    scenario: WPN114.TimeNode
+    scenario: Time.Node
     {
         source: audiostream
         parentNode: parent.scenario
-        duration: WPN114.TimeNode.Infinite
+        duration: Time.Node.Infinite
 
         InteractionExecutor
         {
@@ -25,7 +26,7 @@ Scene
             onStart:    sampler.play();
         }
 
-        WPN114.Automation
+        Time.Automation
         {
             after: interaction_ending_ex;
             target: fade_target.rooms
@@ -36,15 +37,16 @@ Scene
 
             onEnd:
             {
-                if ( fade_target === woodpath.jomon )
+                if (fade_target === woodpath.jomon)
                      woodpath.jomon.cicadas.stop()
-                else if ( fade_target === stonepath.ammon )
+                else
+                    if (fade_target === stonepath.ammon)
                      stonepath.ammon.wind.stop();
 
                 functions.setTimeout(function(){
                     fade_target.rooms.active = false
                     scenario.end();
-                }, 2000 )
+                }, 2000)
             }
         }
     }
@@ -58,19 +60,13 @@ Scene
         broadcast: true
     }
 
-    WPN114.StereoSource //----------------------------------------- SAMPLER
+    Audio.Sampler
     {
-        parentStream: rooms
-        fixed: true
-        diffuse: 0.2
-        xspread: 0.25
-        y: 0.75
-
-        exposePath: fmt("audio/sampler/source")
-
-        WPN114.StreamSampler { id: sampler; dBlevel: -3
-            exposePath: fmt("audio/sampler")
-            path: "audio/wpn214/wpn214.wav" }
+        id: sampler
+        name: "wpn214"
+        file: "audio/wpn214/wpn214.wav"
+        stream: true
+        mul: db(-3)
     }
 }
 

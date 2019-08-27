@@ -58,7 +58,7 @@ Scene
             running = true;
         }
 
-        function update( tick )
+        function update(tick)
         {
             count += tick;
             countstr = functions.realToTime(count);

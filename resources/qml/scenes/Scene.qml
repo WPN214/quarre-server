@@ -1,19 +1,30 @@
 import QtQuick 2.0
-import WPN114.Network 1.0 as Net
-import WPN114.Audio.Spatial 1.0 as Spatial
-import WPN114.Time 1.0 as Time
+import WPN114.Network 1.1 as Network
+import WPN114.Audio.Spatial 1.1 as Spatial
+import WPN114.Time 1.1 as Time
 import ".."
 
 Item
 {
     id: root
 
-    property string path
-    property bool running: false
-    property bool notify: true
-    property bool audio: true
-    property bool endShutdown: true
-    property int shutdown_after: 3000
+    property string
+    path
+
+    property bool
+    running: false
+
+    property bool
+    notify: true
+
+    property bool
+    audio: true
+
+    property bool
+    endShutdown: true
+
+    property int
+    shutdown_after: 3000
 
     /*
         a scene consists in a bi/tridimensional audiospace and a scenario
@@ -22,11 +33,25 @@ Item
         'end' signal means that there's no more audio about to come out of this scene
     */
 
-    signal next ( );
-    signal end  ( );
+    signal
+    next();
 
-    Net.Node { path: fmt( "end" ); type: Net.Type.Impulse; onValueReceived: root.stop() }
-    Net.Node { path: fmt( "begin" ); type: Net.Type.Impulse; onValueReceived: root.start() }
+    signal
+    end();
+
+    Network.Node
+    {
+        path: fmt("end");
+        type: Network.Type.Impulse;
+        onValueReceived: root.stop()
+    }
+
+    Network.Node
+    {
+        path: fmt("begin");
+        type: Network.Type.Impulse;
+        onValueReceived: root.start()
+    }
 
     function fmt(str)
     {
@@ -41,18 +66,20 @@ Item
 
     function start() // ===================================== START_SCENE
     {
-        if ( running ) return;
-        if ( !audiostream.active )
-              audiostream.active = true;
+        if (running) return;
+        if (!audiostream.active)
+             audiostream.active = true;
 
         rooms.active = true;
-        if ( !timer.running ) timer.start();
+
+        if (!timer.running)
+            timer.start();
+
         scenario.start();
         running = true;
 
-        if ( notify )
-        {
-            net.clients.notifyScene( name() );
+        if (notify) {
+            net.clients.notifyScene(name());
             main_scenario.runningScene = this;
         }
     }
@@ -66,8 +93,7 @@ Item
     {
         var main = net.server.get(path);
 
-        if ( endShutdown )
-        {
+        if (endShutdown) {
             // stop all samplers
             var stopnodes = main.collect( "stop" );
             stopnodes.forEach(function(node){
@@ -94,21 +120,23 @@ Item
         });
     }
 
-    property Spatial.Rooms rooms: Spatial.Rooms
+    property Spatial.Rooms
+    rooms: Spatial.Rooms
     {
         setup:  roomsetup
         active: false
     }
 
-    property Time.TimeNode scenario
+    property Time.Node
+    scenario
+
     Component.onCompleted:
     {
         scenario.end.connect(root.onEnd);
-        if ( audio )
-        {
+
+        if (audio) {
             rooms.parentStream = audiostream
             rooms.exposePath = fmt("audio/rooms")
         }
     }
-
 }

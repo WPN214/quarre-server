@@ -20,12 +20,6 @@ Item
         Component.onCompleted:
         {
             mainview.tree.model = nodeTree();
-//            query_server.loadPreset("angouleme.json");
-
-//            var nodes = query_server.collectNodes("dBlevel");
-//            nodes.forEach(function(node){
-//                node.resetValue();
-//            })
         }
     }
 

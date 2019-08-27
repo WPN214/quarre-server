@@ -13,3 +13,6 @@ find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 add_executable(${PROJECT_NAME} "main.cpp" "resources/qml/qml.qrc")
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Quick)
+
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(DIRECTORY audio DESTINATION shared/quarre-server)

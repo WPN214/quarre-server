@@ -9,8 +9,7 @@ Item
     {
         var timer = timerComponent.createObject(root)
         timer.interval = timeout || 0
-        timer.triggered.connect(function()
-        {
+        timer.triggered.connect(function() {
             timer.destroy()
             callback()
         })
@@ -24,11 +23,11 @@ Item
         var min = Math.floor(value/60), sec = Math.round(value) % 60;
         var min_str, sec_str;
 
-        if      ( min < 10 )
+        if      (min < 10)
                 min_str = "0" + min.toString();
         else    min_str = min.toString();
 
-        if      ( sec < 10 )
+        if      (sec < 10)
                 sec_str = "0" + sec.toString();
         else    sec_str = sec.toString();
 
@@ -54,22 +53,20 @@ Item
 
         // if next interaction is different than current one
         // send notes off
-        if ( interaction !== next && idx )
-        {
+        if (interaction !== next && idx) {
             var prev_chord = score.score[idx-1];
-            for ( var c = 0; c < prev_chord['notes'].length; ++c )
+            for (var c = 0; c < prev_chord['notes'].length; ++c)
                  instrument.noteOff(0, prev_chord['notes'][c], 127);
         }
 
-        for ( var i = 0; i < chord['notes'].length; ++i )
+        for (var i = 0; i < chord['notes'].length; ++i)
         {
-            ( function(i) {
+            (function(i) {
                 setTimeout( function() {
                     instrument.noteOn(0, chord['notes'][i], chord['velocity'][i]);
                 },  chord['times'][i]);
 
-                if ( interaction === next )
-                {
+                if (interaction === next) {
                     setTimeout( function() {
                         instrument.noteOff(0, chord['notes'][i], chord['velocity'][i]);
                     },  chord['duration']);
@@ -83,7 +80,7 @@ Item
         setTimeout( function() {
             next.owners.forEach(function(owner) {
                 var value = next_chord["notes"].length;
-                owner.remote.sendMessage("/modules/strings/display", value, true)})            
+                owner.remote.send("/modules/strings/display", value, true)})
         }, ndur)
 
         score.index++;

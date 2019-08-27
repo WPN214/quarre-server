@@ -5,24 +5,47 @@ Item
 {
     id: root
 
-    property int idkey:             0
-    property var owners:            [ ];
-    property string title:          ""
-    property string description:    ""
-    property string module:         ""
-    property string path:           ""
-    property bool broadcast:        false
+    property int
+    idkey: 0
 
-    property int countdown: 0
-    property int length: 0
+    property var
+    owners: [];
 
-    property list<QuMapping> mappings
+    property string
+    title: ""
 
-    property bool dispatched: false
+    property string
+    description:  ""
 
-    signal interactionNotify    ( );
-    signal interactionBegin     ( );
-    signal interactionEnd       ( );
+    property string
+    module: ""
+
+    property string
+    path: ""
+
+    property bool
+    broadcast: false
+
+    property int
+    countdown: 0
+
+    property int
+    length: 0
+
+    property list<QuMapping>
+    mappings
+
+    property bool
+    dispatched: false
+
+    signal
+    interactionNotify();
+
+    signal
+    interactionBegin();
+
+    signal
+    interactionEnd();
 
     function notify(cd, le) //==================================================== INTERACTION_NOTIFY
     {
@@ -37,8 +60,7 @@ Item
     {
         console.log("Beginning interaction:", root.title);
         owners.forEach(function(owner) {
-            for ( var i = 0; i < mappings.length; ++i )
-            {
+            for (var i = 0; i < mappings.length; ++i) {
                 var mapping = mappings[i];
                 owner.remote.listen(mapping.source);
                 var node = owner.remote.get(mapping.source);
@@ -55,8 +77,7 @@ Item
         console.log("Ending interaction:", root.title);
 
         owners.forEach(function(owner) {
-            for ( var i = 0; i < mappings.length; ++i )
-            {
+            for (var i = 0; i < mappings.length; ++i) {
                 var mapping = mappings[i];
                 owner.remote.ignore(mapping.source);
                 var node = owner.remote.get(mapping.source);
@@ -67,6 +88,6 @@ Item
 
         root.interactionEnd();
         root.dispatched.value = false;
-        owners = [ ];
+        owners = [];
     }
 }
